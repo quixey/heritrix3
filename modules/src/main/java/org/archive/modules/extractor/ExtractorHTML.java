@@ -507,6 +507,8 @@ public class ExtractorHTML extends ContentExtractor implements InitializingBean 
                     valueContext = elementContext(element,attr.group(13));
                     considerQueryStringValues(curi, value, valueContext,Hop.SPECULATIVE);
                 }
+                valueVal = value; 
+                valueContext = elementContext(element,attr.group(10));
                 // any other attribute
                 // ignore for now
                 // could probe for path- or script-looking strings, but
