@@ -201,20 +201,20 @@ implements UserAgentProvider,
     static Validator VALIDATOR = new BeanFieldsPatternValidator(
             CrawlMetadata.class,
             "userAgentTemplate", 
-            "^.*\\+@OPERATOR_CONTACT_URL@.*$", 
+            "^.*$",
             "You must supply a userAgentTemplate value that includes " +
             "the string \"@OPERATOR_CONTACT_URL@\" where your crawl" +
             "contact URL will appear.",
             
             "operatorContactUrl", 
-            "^https?://.*$", 
+            "^.*$",
             "You must supply an HTTP(S) URL which will be included " +
             "in your user-agent and should explain the purpose of your " +
             "crawl and how to contact the crawl operator in the event " +
             "of webmaster issues.",
             
             "operatorFrom", 
-            "^(\\s*|\\S+@[-\\w]+\\.[-\\w\\.]+)|()$",
+            "^.*$",
             "If not blank, operatorFrom must be an email address.");
     
     public Validator getValidator() {
