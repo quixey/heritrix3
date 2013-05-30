@@ -712,18 +712,25 @@ public class ExtractorHTML extends ContentExtractor implements InitializingBean 
         }
 
         try {
-            ReplayCharSequence cs = curi.getRecorder().getContentReplayCharSequence();
-           // Extract all links from the charsequence
-           extract(curi, cs);
-           if(cs.getDecodeExceptionCount()>0) {
-               curi.getNonFatalFailures().add(cs.getCodingException()); 
-           }
-           // Set flag to indicate that link extraction is completed.
-           return true;
-        } catch (IOException e) {
-            curi.getNonFatalFailures().add(e);
-            logger.log(Level.WARNING,"Failed get of replay char sequence in " +
-                Thread.currentThread().getName(), e);
+            String htmlbody = (String) curi.getExtraInfo().get("htmlbody");
+            if (htmlbody != null) {
+                logger.fine("HTMLBody worked!");
+                extract(curi, htmlbody);
+                return true;
+            }
+        } catch (org.json.JSONException e) {
+            try {
+               ReplayCharSequence cs = curi.getRecorder().getContentReplayCharSequence();
+               extract(curi, cs);
+               if(cs.getDecodeExceptionCount()>0) {
+                   curi.getNonFatalFailures().add(cs.getCodingException());
+               }
+               return true;
+            } catch (IOException e2) {
+                curi.getNonFatalFailures().add(e2);
+                logger.log(Level.WARNING,"Failed get of replay char sequence in " +
+                    Thread.currentThread().getName(), e2);
+            }
         }
         return false;
     }

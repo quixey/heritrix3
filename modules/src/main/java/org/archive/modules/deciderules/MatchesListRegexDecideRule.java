@@ -90,6 +90,9 @@ public class MatchesListRegexDecideRule extends PredicatedDecideRule {
         String str = uri.toString();
         boolean listLogicOR = getListLogicalOr();
 
+        logger.fine("RegexMatchesList: " + str + "; " + listLogicOR);
+        logger.fine("PATTERNS: " + regexes);
+
         for (Pattern p: regexes) {
             boolean matches = p.matcher(str).matches();
 
