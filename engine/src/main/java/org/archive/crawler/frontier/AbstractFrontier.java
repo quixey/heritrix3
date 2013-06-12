@@ -522,17 +522,18 @@ public abstract class AbstractFrontier
      */
     public void schedule(CrawlURI curi) {
         sheetOverlaysManager.applyOverlaysTo(curi);
-        if(curi.getClassKey()==null) {
-            // remedial processing
-            try {
-                KeyedProperties.loadOverridesFrom(curi);
+        try {
+            KeyedProperties.loadOverridesFrom(curi);
+            if(curi.getClassKey()==null) {
+                // remedial processing
                 preparer.prepare(curi);
-                processScheduleIfUnique(curi);
-            } finally {
-                KeyedProperties.clearOverridesFrom(curi); 
             }
+            processScheduleIfUnique(curi);
+        } finally {
+            KeyedProperties.clearOverridesFrom(curi); 
         }
     }
+
 
     /**
      * Accept the given CrawlURI for scheduling, as it has
@@ -568,6 +569,10 @@ public abstract class AbstractFrontier
     public void finished(CrawlURI curi) {
         try {
             KeyedProperties.loadOverridesFrom(curi);
+	    
+        logger.log(Level.FINE, "Abstract Frontier Finished " + curi + 
+		   " with status " + CrawlURI.fetchStatusCodesToString(curi.getFetchStatus()) + " " + 
+		   queuedUriCount() + " in queue");
             processFinish(curi);
         } finally {
             KeyedProperties.clearOverridesFrom(curi); 
