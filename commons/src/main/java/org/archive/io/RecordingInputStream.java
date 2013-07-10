@@ -348,4 +348,9 @@ public class RecordingInputStream
     public int getRecordedBufferLength() {
         return recordingOutputStream.getBufferLength();
     }
+
+    public void cleanup() {
+	this.recordingOutputStream.cleanup();
+    }
+
 }

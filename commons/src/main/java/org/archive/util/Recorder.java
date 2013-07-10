@@ -278,6 +278,8 @@ public class Recorder {
         this.close();
         this.delete(this.backingFileBasename + RECORDING_OUTPUT_STREAM_SUFFIX);
         this.delete(this.backingFileBasename + RECORDING_INPUT_STREAM_SUFFIX);
+	this.ris.cleanup();
+	this.ros.cleanup();
     }
 
     /**
@@ -577,5 +579,6 @@ public class Recorder {
     public void endReplays() {
         ArchiveUtils.closeQuietly(replayCharSequence);
         replayCharSequence = null;
+	cleanup();
     }
 }
