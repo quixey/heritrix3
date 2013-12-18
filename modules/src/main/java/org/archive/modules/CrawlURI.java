@@ -867,6 +867,9 @@ implements MultiReporter, Serializable, OverlayContext {
      * state gathered during processing.
      */
     public void processingCleanup() {
+	processingCleanup(true);
+    }
+    public void processingCleanup(boolean clearOutlinks) {
         this.httpRecorder = null;
         this.fetchStatus = S_UNATTEMPTED;
         this.setPrerequisite(false);
@@ -878,8 +881,10 @@ implements MultiReporter, Serializable, OverlayContext {
         this.data = getPersistentDataMap();
         
         extraInfo = null;
-        outCandidates = null;
-        outLinks = null;
+	if (clearOutlinks){
+	    outLinks = null;
+	    outCandidates = null;
+	}
         method = null;
     }
     
